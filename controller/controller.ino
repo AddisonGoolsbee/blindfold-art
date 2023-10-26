@@ -2,8 +2,7 @@
 #include <WiFiUdp.h>
 #include <math.h>
 #include<Wire.h>
-const int MPU_addr=0x68;  // I2C address of the MPU-6050, not really sure 
-                          // what this does, but it works. Plug SDA 21, SCL 22
+const int MPU_addr=0x68;  // I2C address of the MPU-6050, Plug SDA 21, SCL 22.
 int16_t AcX,AcY,AcZ;
 // int16_t Tmp,GyX,GyY,GyZ; // not using these, but could...
 
