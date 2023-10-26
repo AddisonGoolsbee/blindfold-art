@@ -1,9 +1,113 @@
+import random
 import socket
 import pygame
 import sys
 
 MULTIPLIER = 0.005
 TIME = 120000  # 2 minutes in milliseconds
+
+drawing_list = [
+    "Cat",
+    "Dog",
+    "Tree",
+    "Sun",
+    "Moon",
+    "Star",
+    "Fish",
+    "Bird",
+    "House",
+    "Car",
+    "Boat",
+    "Flower",
+    "Apple",
+    "Banana",
+    "Hat",
+    "Shoe",
+    "Book",
+    "Chair",
+    "Table",
+    "Ball",
+    "Circle",
+    "Square",
+    "Triangle",
+    "Heart",
+    "Smile",
+    "Cloud",
+    "Rain",
+    "Snow",
+    "Mountain",
+    "River",
+    "Ocean",
+    "Beach",
+    "Island",
+    "Forest",
+    "Desert",
+    "Sky",
+    "Grass",
+    "Leaf",
+    "Branch",
+    "Roots",
+    "Bear",
+    "Lion",
+    "Tiger",
+    "Elephant",
+    "Monkey",
+    "Giraffe",
+    "Kangaroo",
+    "Horse",
+    "Cow",
+    "Pig",
+    "Chicken",
+    "Duck",
+    "Goose",
+    "Turkey",
+    "Deer",
+    "Rabbit",
+    "Fox",
+    "Wolf",
+    "Owl",
+    "Eagle",
+    "Parrot",
+    "Penguin",
+    "Dolphin",
+    "Whale",
+    "Shark",
+    "Octopus",
+    "Crab",
+    "Lobster",
+    "Snail",
+    "Butterfly",
+    "Bee",
+    "Ant",
+    "Spider",
+    "Frog",
+    "Turtle",
+    "Snake",
+    "Lizard",
+    "Dinosaur",
+    "Dragon",
+    "Unicorn",
+    "Fairy",
+    "Angel",
+    "Robot",
+    "Alien",
+    "Monster",
+    "Zombie",
+    "Vampire",
+    "Ghost",
+    "Witch",
+    "Wizard",
+    "King",
+    "Queen",
+    "Prince",
+    "Princess",
+    "Knight",
+    "Pirate",
+    "Ninja",
+    "Samurai",
+    "Cowboy",
+    "Astronaut",
+]
 
 ip_address = "0.0.0.0"
 port = 12345
@@ -23,19 +127,22 @@ GRAY = (200, 200, 200)
 # Setting up font
 font_size = 48
 font = pygame.font.SysFont(None, font_size)
-text = font.render("Draw a Cat", True, WHITE)
-text_rect = text.get_rect(center=(width / 2, font_size / 2))
 
 
-def draw_dot(x, y, color=WHITE):
+def draw_dot(x, y, size, color=WHITE):
     x = x * width
-    y = height - (y * (height - font_size))
-    pygame.draw.circle(screen, color, (int(x), int(y)), 5)
+    y = height - (y * (height - font_size * 1.5))
+    adjusted_size = size * 30.0 if size > 0.1 else 0
+    pygame.draw.circle(screen, color, (int(x), int(y)), adjusted_size)
 
 
 x_loc = 0.5
 y_loc = 0.5
+touch = 0.0
 screen.fill(BLACK)
+drawing = random.choice(drawing_list)
+mission_text = font.render("Draw a " + drawing, True, WHITE)
+text_rect = mission_text.get_rect(center=(width / 2, font_size / 2))
 
 # Timer
 start_ticks = pygame.time.get_ticks()
@@ -46,9 +153,9 @@ running = True
 while running:
     clear_rect = pygame.Rect(0, 0, width, font_size)
     screen.fill(BLACK, clear_rect)
-    screen.blit(text, text_rect.topleft)
+    screen.blit(mission_text, text_rect.topleft)
 
-    draw_dot(x_loc, y_loc, GRAY)
+    draw_dot(x_loc, y_loc, 0, GRAY)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
@@ -66,24 +173,23 @@ while running:
     screen.blit(timer_text, timer_rect.topleft)
 
     if remaining_time == 0:
-        text = font.render("Amazing!", True, WHITE)
-        text_rect = text.get_rect(center=(width / 2, font_size / 2))
+        mission_text = font.render(drawing, True, WHITE)
+        text_rect = mission_text.get_rect(center=(width / 2, font_size / 2))
 
     else:
         data, address = udp_socket.recvfrom(1024)
         data = data.decode("utf-8").strip()
         data_split = data.split(",")
-        pitch = float(data_split[0][(data_split[0].find(": ") + 2) :])
-        yaw = float(data_split[1][(data_split[1].find(": ") + 2) :])
+        pitch, yaw, touch = [float(i[(i.find(": ") + 2) :]) for i in data_split]
 
-        print(pitch, yaw)
+        print(pitch, yaw, touch)
         pitch = pitch * MULTIPLIER
         yaw = yaw * MULTIPLIER
 
         x_loc = max(0, min(1, x_loc + pitch))
         y_loc = max(0, min(1, y_loc + yaw))
 
-        draw_dot(x_loc, y_loc)
+        draw_dot(x_loc, y_loc, touch)
 
     # Update the display
     pygame.display.flip()

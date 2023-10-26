@@ -2,12 +2,12 @@
 #include <WiFiUdp.h>
 #include <math.h>
 
-const int pin = 34; 
+const int touchPin = 32;
 
 const char* ssid = "yale wireless";
 
-const char* udpServerIP = "172.27.33.77"; 
-const int udpServerPort = 12345; 
+const char* udpServerIP = "172.27.33.77";
+const int udpServerPort = 12345;
 
 WiFiUDP udp;
 
@@ -16,8 +16,8 @@ double angle = 0.0;
 double increment = 0.01;
 
 void setup() {
-  pinMode(pin, INPUT);
-  Serial.begin(115200); 
+  pinMode(touchPin, INPUT);
+  Serial.begin(115200);
 
   WiFi.begin(ssid);
   while (WiFi.status() != WL_CONNECTED) {
@@ -29,21 +29,17 @@ void setup() {
 }
 
 void loop() {
+  double touch = analogRead(touchPin) / 4096.0;
+
   double pitch = sin(angle);
   double yaw = cos(angle);
   angle += increment;
 
   char buffer[50];
-  sprintf(buffer, "Pitch: %.2f, Yaw: %.2f", pitch, yaw);
+  sprintf(buffer, "Pitch: %.4f, Yaw: %.4f, Touch: %.4f", pitch, yaw, touch);
 
   Serial.println(buffer);
   udp.beginPacket(udpServerIP, udpServerPort);
   udp.println(buffer);
   udp.endPacket();
-
-  delay(5);
-
-
 }
-
-
