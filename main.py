@@ -180,16 +180,17 @@ while running:
         data, address = udp_socket.recvfrom(1024)
         data = data.decode("utf-8").strip()
         data_split = data.split(",")
-        pitch, yaw, touch = [float(i[(i.find(": ") + 2) :]) for i in data_split]
+        pitch, roll, touch, hands = [float(i[(i.find(": ") + 2) :]) for i in data_split]
 
-        print(pitch, yaw, touch)
+        print(pitch, roll, touch, hands)
         pitch = pitch * MULTIPLIER
-        yaw = yaw * MULTIPLIER
+        roll = roll * MULTIPLIER
 
-        x_loc = max(0, min(1, x_loc + pitch))
-        y_loc = max(0, min(1, y_loc + yaw))
-
-        draw_dot(x_loc, y_loc, touch)
+        x_loc = max(0, min(1, x_loc + roll))
+        y_loc = max(0, min(1, y_loc + pitch))
+        
+        if not hands:
+            draw_dot(x_loc, y_loc, touch)
 
     # Update the display
     pygame.display.flip()
