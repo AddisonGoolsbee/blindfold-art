@@ -6,7 +6,14 @@ from enum import Enum
 
 MULTIPLIER = 0.005
 TIME = 60000  # 2 minutes in milliseconds
-START_MESSAGE = "Welcome Gamma Gary\n\nPlease make sure you have a companion with you\nTo begin, please dip your hands in water and put a blindfold on\nyour partner (Peter Scottsen) will try to guide you through a painting\nWhen you are ready, firmly grab the two metal bars\nof the device with the gold circle facing you\nand hold it at head level\n\nYou'll need to flip the switch to turn on the device\nPlease turn it off when you're done using it"
+START_MESSAGE = "Welcome, Gamma Gary. \
+        \n\nPlease make sure you have a companion with you.\
+        \nTo begin, please dip your hands in water and put a blindfold on\
+        \nyour partner (Peter Scottsen) will try to guide you through a painting\
+        \nWhen you are ready, firmly grab the two metal bars of the device, with\
+        \nthe gold circle facing you, and hold it at head level.\
+        \n\nYou'll need to flip the switch to turn on the device.\
+        \nPlease turn it off when you're done using it."
 INACTIVE_DURATION = 3000
 FINISH_RESTART_DURATION = 20000
 
@@ -31,7 +38,6 @@ drawing_list = [
     "Chair",
     "Table",
     "Ball",
-    "Circle",
     "Square",
     "Triangle",
     "Heart",
@@ -41,7 +47,6 @@ drawing_list = [
     "Snowflake",
     "Mountain",
     "River",
-    "Ocean",
     "Beach",
     "Island",
     "Forest",
@@ -111,6 +116,21 @@ drawing_list = [
     "Samurai",
     "Cowboy",
     "Astronaut",
+    "Apple",
+    "Pear",
+    "Banana",
+    "Pie",
+    "Cake",
+    "Cookie",
+    "Sandwich",
+    "Shoes",
+    "Bomb",
+    "Lightbulb",
+    "Keyboard",
+    "Phone",
+    "Camera",
+    "Clock",
+    "Glasses",
 ]
 
 class State(Enum):
