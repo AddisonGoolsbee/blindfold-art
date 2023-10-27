@@ -123,7 +123,7 @@ width, height = screen.get_size()
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-GRAY = (200, 200, 200)
+GRAY = (150, 150, 150)
 
 # Setting up font
 font_size = 48
@@ -131,15 +131,18 @@ font = pygame.font.SysFont(None, font_size)
 
 
 def draw_dot(x, y, size, color=WHITE):
+    print(color)
     x = x * width
     y = height - (y * (height - font_size * 1.5))
-    adjusted_size = size * 30.0 if size > 0.1 else 0
+    adjusted_size = size * 30.0
     pygame.draw.circle(screen, color, (int(x), int(y)), adjusted_size)
 
 
 x_loc = 0.5
 y_loc = 0.5
 touch = 0.0
+previous_x = 0.5
+previous_y = 0.5
 screen.fill(BLACK)
 drawing = random.choice(drawing_list)
 mission_text = font.render("Draw a " + drawing, True, WHITE)
@@ -155,8 +158,6 @@ while running:
     clear_rect = pygame.Rect(0, 0, width, font_size)
     screen.fill(BLACK, clear_rect)
     screen.blit(mission_text, text_rect.topleft)
-
-    draw_dot(x_loc, y_loc, 0, GRAY)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
@@ -178,7 +179,11 @@ while running:
         text_rect = mission_text.get_rect(center=(width / 2, font_size / 2))
 
     else:
-        data, address = udp_socket.recvfrom(1024)
+        try:
+            data, address = udp_socket.recvfrom(1024)
+        except socket.error as e:
+            pass
+
         data = data.decode("utf-8").strip()
         data_split = data.split(",")
         pitch, roll, touch, hands = [float(i[(i.find(": ") + 2) :]) for i in data_split]
@@ -191,7 +196,12 @@ while running:
         y_loc = max(0, min(1, y_loc + pitch))
         
         if not hands:
-            draw_dot(x_loc, y_loc, touch)
+            draw_dot(previous_x, previous_y, 0.1, BLACK)
+            draw_dot(x_loc, y_loc, touch, color=WHITE)
+            draw_dot(x_loc, y_loc, 0.1, GRAY)
+        
+        previous_x = x_loc
+        previous_y = y_loc
 
     # Update the display
     pygame.display.flip()
