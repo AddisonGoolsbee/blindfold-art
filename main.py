@@ -110,10 +110,11 @@ drawing_list = [
 ]
 
 ip_address = "0.0.0.0"
-port = 12345
+port = 12346
 
 udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_socket.bind((ip_address, port))
+udp_socket.settimeout(1)  # Set a timeout of 1 second
 
 pygame.init()
 

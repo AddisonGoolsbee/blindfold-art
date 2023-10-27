@@ -13,7 +13,7 @@ const int handsPlacedPin = 33; // hands placed sensor
 const char* ssid = "yale wireless";
 
 const char* udpServerIP = "172.26.91.231";
-const int udpServerPort = 12345;
+const int udpServerPort = 12346;
 
 WiFiUDP udp;
 
@@ -29,7 +29,8 @@ void setup() {
 
   WiFi.begin(ssid);
   while (WiFi.status() != WL_CONNECTED) {
-    Serial.println("Connecting to WiFi...");
+    // Serial.println("Connecting to WiFi...");
+    Serial.println(WiFi.macAddress());
   }
   Serial.println("Connected to WiFi");
 
