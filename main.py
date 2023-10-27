@@ -5,8 +5,8 @@ import sys
 from enum import Enum
 
 MULTIPLIER = 0.005
-TIME = 120000  # 2 minutes in milliseconds
-START_MESSAGE = "Welcome Gamma Gary\n\nPlease make sure you have a companion with you\nTo begin, please dip your hands in water and put a blindfold on\nyour partner (Peter Scottsen) will try to guide you through a painting\nWhen you are ready, firmly grab the two metal bars\nof the device with the gold circle facing you\nand hold it at head level"
+TIME = 60000  # 2 minutes in milliseconds
+START_MESSAGE = "Welcome Gamma Gary\n\nPlease make sure you have a companion with you\nTo begin, please dip your hands in water and put a blindfold on\nyour partner (Peter Scottsen) will try to guide you through a painting\nWhen you are ready, firmly grab the two metal bars\nof the device with the gold circle facing you\nand hold it at head level\n\nYou'll need to flip the switch to turn on the device\nPlease turn it off when you're done using it"
 INACTIVE_DURATION = 3000
 FINISH_RESTART_DURATION = 20000
 
