@@ -12,7 +12,7 @@ const int handsPlacedPin = 33; // hands placed sensor
 
 const char* ssid = "yale wireless";
 
-const char* udpServerIP = "172.26.91.231";
+const char* udpServerIP = "172.27.33.77";
 const int udpServerPort = 12346;
 
 WiFiUDP udp;
