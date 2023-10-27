@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import random
 import socket
 import pygame
@@ -129,20 +131,21 @@ pygame.init()
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width, height = screen.get_size()
+screen_multiplier = width / 1600
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (150, 150, 150)
 
 # Setting up font
-font_size = 60
+font_size = int(60 * screen_multiplier)
 font = pygame.font.SysFont(None, font_size)
 
 
 def draw_dot(x, y, size, color=WHITE):
     x = x * width
     y = height - (y * (height - font_size * 1.5))
-    adjusted_size = size * 30.0
+    adjusted_size = int(size * 30 * screen_multiplier)
     pygame.draw.circle(screen, color, (int(x), int(y)), adjusted_size)
 
 state = State.NEW
@@ -154,7 +157,7 @@ previous_y = 0.5
 screen.fill(BLACK)
 drawing = random.choice(drawing_list)
 mission_text = font.render(f"Draw a{'n' if drawing[0].lower() in 'aeiou' else ''} {drawing.lower()}", True, WHITE)
-text_rect = mission_text.get_rect(center=(width / 2, font_size / 2))
+text_rect = mission_text.get_rect(center=(width // 2, font_size // 2))
 inactive_time = None
 inactive = True
 was_inactive = False
@@ -166,7 +169,7 @@ start_ticks = pygame.time.get_ticks()
 def display_start():
     screen.fill(BLACK)
     text_rendered = [font.render(line, True, WHITE) for line in START_MESSAGE.split('\n')]
-    y = 30
+    y = 30 * screen_multiplier
     for text in text_rendered:
         text_rect = text.get_rect(center=(width // 2, y))
         screen.blit(text, text_rect)
@@ -244,7 +247,7 @@ while running:
                 screen.fill(BLACK)
                 drawing = random.choice(drawing_list)
                 mission_text = font.render(f"Draw a{'n' if drawing[0].lower() in 'aeiou' else ''} {drawing.lower()}", True, WHITE)
-                text_rect = mission_text.get_rect(center=(width / 2, font_size / 2))
+                text_rect = mission_text.get_rect(center=(width // 2, font_size // 2))
                 start_ticks = pygame.time.get_ticks()
                 was_inactive = False
                 state = State.RUNNING
@@ -253,7 +256,7 @@ while running:
             clear_rect = pygame.Rect(0, 0, width, font_size)
             screen.fill(BLACK, clear_rect)
             display_text = font.render("Amazing "+ drawing + "!", True, WHITE)
-            display_rect = display_text.get_rect(center=(width / 2, font_size / 2))
+            display_rect = display_text.get_rect(center=(width // 2, font_size // 2))
             screen.blit(display_text, display_rect)
 
             if inactive:
@@ -266,7 +269,7 @@ while running:
                 screen.fill(BLACK)
                 drawing = random.choice(drawing_list)
                 mission_text = font.render(f"Draw a{'n' if drawing[0].lower() in 'aeiou' else ''} {drawing.lower()}", True, WHITE)
-                text_rect = mission_text.get_rect(center=(width / 2, font_size / 2))
+                text_rect = mission_text.get_rect(center=(width // 2, font_size // 2))
                 start_ticks = pygame.time.get_ticks()
                 was_inactive = False
                 state = State.RUNNING
