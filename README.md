@@ -1,10 +1,5 @@
 # Canvas of the Conquered
 
-Tags: Peter Scottsen, accessible
-: Koray Akduman, Addison Goolsbee
-
-# Canvas of the Conquered
-
 [https://github.com/AddisonGoolsbee/blindfold-art](https://github.com/AddisonGoolsbee/blindfold-art)
 
 Gamma Gary, formerly a famous artist, was blinded during the Seige of Smelton Keep and subsequently exiled. Now, Gamma Gary must team up with the exiled former war criminal Peter Scottsen to regain his artistic abilities and return home.
