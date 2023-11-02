@@ -189,7 +189,7 @@ start_ticks = pygame.time.get_ticks()
 def display_start():
     screen.fill(BLACK)
     text_rendered = [font.render(line, True, WHITE) for line in START_MESSAGE.split('\n')]
-    y = 30 * screen_multiplier
+    y = 30 * screen_multiplier + 30
     for text in text_rendered:
         text_rect = text.get_rect(center=(width // 2, y))
         screen.blit(text, text_rect)
@@ -267,7 +267,7 @@ while running:
                 screen.fill(BLACK)
                 drawing = random.choice(drawing_list)
                 mission_text = font.render(f"Draw a{'n' if drawing[0].lower() in 'aeiou' else ''} {drawing.lower()}", True, WHITE)
-                text_rect = mission_text.get_rect(center=(width // 2, font_size // 2))
+                text_rect = mission_text.get_rect(center=(width // 2, font_size // 2 + 40))
                 start_ticks = pygame.time.get_ticks()
                 was_inactive = False
                 state = State.RUNNING
